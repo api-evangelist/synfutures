@@ -1,0 +1,276 @@
+openapi: 3.0.3
+info:
+  title: SynFutures RWA Trading Cash Stock API
+  version: v1
+  description: RESTful API for SynFutures tokenized stock (Real-World Asset) trading. Covers market data, portfolio, order placement (calldata build + One Click delegated send), cash and stock deposits/withdrawals, and One Click (1CT) delegation management. All /api/v1 endpoints require HMAC-SHA256 request authentication with an IP-whitelisted partner API key.
+  contact:
+    name: SynFutures
+    url: https://docs.synfutures.com/rwa-trading-apis/readme
+  x-logo:
+    url: https://www.synfutures.com/assets/trade_every_asset.png
+servers:
+- url: https://base-api.synfutures.com/rwa/trading
+  description: RWA Trading API (base path /api/v1)
+security:
+- ApiKeyAuth: []
+  ApiTimestamp: []
+  ApiNonce: []
+  ApiSignature: []
+  ApiChainId: []
+  ApiProduct: []
+tags:
+- name: Stock
+  description: Tokenized stock deposits and withdrawals
+paths:
+  /api/v1/stock/deposits/calldata:
+    post:
+      operationId: buildStockDepositCalldata
+      tags:
+      - Stock
+      summary: Stock deposit calldata
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/deposits/send:
+    post:
+      operationId: sendStockDeposit
+      tags:
+      - Stock
+      summary: One Click stock deposit
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/deposits/tx:
+    post:
+      operationId: recordStockDepositTx
+      tags:
+      - Stock
+      summary: Record stock deposit tx
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/deposits:
+    get:
+      operationId: listStockDeposits
+      tags:
+      - Stock
+      summary: Stock deposit list
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/PagedEnvelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/deposits/{operationId}:
+    get:
+      operationId: getStockDeposit
+      tags:
+      - Stock
+      summary: Stock deposit detail
+      parameters:
+      - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/withdrawals/calldata:
+    post:
+      operationId: buildStockWithdrawalCalldata
+      tags:
+      - Stock
+      summary: Stock withdrawal calldata
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/withdrawals/send:
+    post:
+      operationId: sendStockWithdrawal
+      tags:
+      - Stock
+      summary: One Click stock withdrawal
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/withdrawals/tx:
+    post:
+      operationId: recordStockWithdrawalTx
+      tags:
+      - Stock
+      summary: Record stock withdrawal tx
+      requestBody:
+        $ref: '#/components/requestBodies/Generic'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/withdrawals:
+    get:
+      operationId: listStockWithdrawals
+      tags:
+      - Stock
+      summary: Stock withdrawal list
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          $ref: '#/components/responses/PagedEnvelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/stock/withdrawals/{operationId}:
+    get:
+      operationId: getStockWithdrawal
+      tags:
+      - Stock
+      summary: Stock withdrawal detail
+      parameters:
+      - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Envelope:
+      type: object
+      description: All responses share this envelope.
+      properties:
+        code:
+          type: integer
+          description: 200 on success; error code otherwise.
+          example: 200
+        errMsg:
+          type: string
+          description: Empty on success; descriptive message on error.
+        data:
+          description: Response payload (shape varies per endpoint).
+        uuid:
+          type: string
+          nullable: true
+          description: Request/trace identifier (null when not applicable).
+        t:
+          type: integer
+          nullable: true
+          description: Server timestamp (null when not applicable).
+    PagedEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/Envelope'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              total:
+                type: integer
+                description: Total matching records.
+              rows:
+                type: array
+                description: Current page of records.
+                items:
+                  type: object
+  responses:
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    PagedEnvelope:
+      description: Paged response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PagedEnvelope'
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+  parameters:
+    OperationId:
+      name: operationId
+      in: path
+      required: true
+      schema:
+        type: string
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Partner API key (must be active, unexpired, and IP-whitelisted).
+    ApiTimestamp:
+      type: apiKey
+      in: header
+      name: x-api-ts
+      description: Unix millisecond timestamp; must be within 45s drift tolerance.
+    ApiNonce:
+      type: apiKey
+      in: header
+      name: x-api-nonce
+      description: Unique replay-prevention nonce per key within the 45s window (UUID recommended).
+    ApiSignature:
+      type: apiKey
+      in: header
+      name: x-api-sign
+      description: HMAC-SHA256 signature over the canonical request, hex-encoded (case-insensitive).
+    ApiChainId:
+      type: apiKey
+      in: header
+      name: x-api-chain-id
+      description: Chain identifier (e.g. 8453 Base, 1 Ethereum, 143 Monad).
+    ApiProduct:
+      type: apiKey
+      in: header
+      name: x-api-p
+      description: Product type; use "Synfutures".

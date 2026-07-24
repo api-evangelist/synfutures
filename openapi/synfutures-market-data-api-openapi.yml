@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: SynFutures RWA Trading Cash Market Data API
+  version: v1
+  description: RESTful API for SynFutures tokenized stock (Real-World Asset) trading. Covers market data, portfolio, order placement (calldata build + One Click delegated send), cash and stock deposits/withdrawals, and One Click (1CT) delegation management. All /api/v1 endpoints require HMAC-SHA256 request authentication with an IP-whitelisted partner API key.
+  contact:
+    name: SynFutures
+    url: https://docs.synfutures.com/rwa-trading-apis/readme
+  x-logo:
+    url: https://www.synfutures.com/assets/trade_every_asset.png
+servers:
+- url: https://base-api.synfutures.com/rwa/trading
+  description: RWA Trading API (base path /api/v1)
+security:
+- ApiKeyAuth: []
+  ApiTimestamp: []
+  ApiNonce: []
+  ApiSignature: []
+  ApiChainId: []
+  ApiProduct: []
+tags:
+- name: Market Data
+  description: On-chain market config, symbols, prices, and corporate actions
+paths:
+  /api/v1/config:
+    get:
+      operationId: getMarketConfig
+      tags:
+      - Market Data
+      summary: On-chain market config
+      description: Returns the on-chain market configuration for the RWA trading venue.
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/symbols:
+    get:
+      operationId: listSymbols
+      tags:
+      - Market Data
+      summary: Tradable symbols
+      description: Lists tradable symbols and their tradability status.
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/prices/{symbol}:
+    get:
+      operationId: getPrice
+      tags:
+      - Market Data
+      summary: Real-time quote
+      parameters:
+      - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/prices/{symbol}/history:
+    get:
+      operationId: getPriceHistory
+      tags:
+      - Market Data
+      summary: K-line history
+      parameters:
+      - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/underlying/{symbol}/price:
+    get:
+      operationId: getUnderlyingPrice
+      tags:
+      - Market Data
+      summary: Underlying quote
+      parameters:
+      - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /api/v1/corporate-action:
+    get:
+      operationId: listCorporateActions
+      tags:
+      - Market Data
+      summary: Corporate actions
+      responses:
+        '200':
+          $ref: '#/components/responses/Envelope'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    Envelope:
+      type: object
+      description: All responses share this envelope.
+      properties:
+        code:
+          type: integer
+          description: 200 on success; error code otherwise.
+          example: 200
+        errMsg:
+          type: string
+          description: Empty on success; descriptive message on error.
+        data:
+          description: Response payload (shape varies per endpoint).
+        uuid:
+          type: string
+          nullable: true
+          description: Request/trace identifier (null when not applicable).
+        t:
+          type: integer
+          nullable: true
+          description: Server timestamp (null when not applicable).
+  parameters:
+    Symbol:
+      name: symbol
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Tradable symbol.
+  responses:
+    RateLimited:
+      description: Rate limit exceeded (1,200 requests/min/IP)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Partner API key (must be active, unexpired, and IP-whitelisted).
+    ApiTimestamp:
+      type: apiKey
+      in: header
+      name: x-api-ts
+      description: Unix millisecond timestamp; must be within 45s drift tolerance.
+    ApiNonce:
+      type: apiKey
+      in: header
+      name: x-api-nonce
+      description: Unique replay-prevention nonce per key within the 45s window (UUID recommended).
+    ApiSignature:
+      type: apiKey
+      in: header
+      name: x-api-sign
+      description: HMAC-SHA256 signature over the canonical request, hex-encoded (case-insensitive).
+    ApiChainId:
+      type: apiKey
+      in: header
+      name: x-api-chain-id
+      description: Chain identifier (e.g. 8453 Base, 1 Ethereum, 143 Monad).
+    ApiProduct:
+      type: apiKey
+      in: header
+      name: x-api-p
+      description: Product type; use "Synfutures".
