@@ -1,0 +1,11 @@
+generated: '2026-07-21'
+method: generated
+skills:
+  - file: synfutures-market-data.md
+    name: Read SynFutures RWA market data
+    api: openapi/synfutures-rwa-trading-openapi.yml
+    operations: [listSymbols, getPrice, getPriceHistory, getUnderlyingPrice, getMarketConfig]
+  - file: synfutures-place-order-one-click.md
+    name: Place a SynFutures RWA order via One Click
+    api: openapi/synfutures-rwa-trading-openapi.yml
+    operations: [getDelegationStatus, prepareDelegation, enableDelegation, buildOrderCalldata, sendOrder, getOrder, sendCancelOrder]

@@ -1,0 +1,60 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/rwa-trading-apis/authentication/headers-and-permissions.md
+docs: https://docs.synfutures.com/rwa-trading-apis/authentication/signature
+summary:
+  types: [apiKey, hmac]
+  api_key_in: [header]
+  signed_requests: true
+  scheme: HMAC-SHA256
+schemes:
+  - name: ApiKeyAuth
+    type: apiKey
+    in: header
+    parameter: x-api-key
+    description: Partner API key. Must be active, not expired, and have an IP whitelist configured; a key with an empty/unset whitelist rejects ALL requests with 401.
+    sources: [openapi/synfutures-rwa-trading-openapi.yml]
+  - name: ApiSignature
+    type: hmac
+    in: header
+    parameter: x-api-sign
+    algorithm: HMAC-SHA256
+    encoding: hex (case-insensitive)
+    description: HMAC-SHA256 signature over the canonical request.
+  - name: ApiTimestamp
+    type: apiKey
+    in: header
+    parameter: x-api-ts
+    description: Unix millisecond timestamp; must be within 45s drift tolerance.
+  - name: ApiNonce
+    type: apiKey
+    in: header
+    parameter: x-api-nonce
+    description: Unique nonce per key within the 45s window (UUID recommended); replay prevention.
+  - name: ApiChainId
+    type: apiKey
+    in: header
+    parameter: x-api-chain-id
+    description: Chain identifier for the request.
+  - name: ApiProduct
+    type: apiKey
+    in: header
+    parameter: x-api-p
+    description: Product type; use "Synfutures".
+permissions:
+  model: key-level access level (not OAuth scopes)
+  levels:
+    - name: READ_ONLY
+      allows: [GET]
+    - name: WRITABLE
+      allows: [GET, POST, DELETE]
+chains:
+  - {name: Base Mainnet, chain_id: 8453}
+  - {name: Ethereum Mainnet, chain_id: 1}
+  - {name: Monad Mainnet, chain_id: 143}
+  - {name: Ethereum Sepolia, chain_id: 11155111}
+  - {name: Monad Testnet, chain_id: 10143}
+  - {name: Base Sepolia, chain_id: 84532}
+notes:
+  - API keys are issued by the SynFutures team (contact via Discord or X); the API is in beta.
+  - One Click Trading (1CT) uses EIP-712 delegated signatures for on-chain actions without per-tx wallet prompts.

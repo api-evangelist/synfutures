@@ -1,0 +1,600 @@
+openapi: 3.0.3
+# x-provenance
+# generated: '2026-07-21'
+# method: generated
+# source: https://docs.synfutures.com/rwa-trading-apis/reference/endpoint-index.md
+# note: Faithfully modeled from SynFutures' published RWA Trading API reference
+#       (endpoint index + authentication + conventions docs). SynFutures publishes
+#       a Swagger UI at https://api.synfutures.com/v3/public/swagger-third-party
+#       but the raw spec requires an API key (endpoint returns HTTP 500 without one),
+#       so this OpenAPI captures the documented surface. No endpoints invented.
+info:
+  title: SynFutures RWA Trading API
+  version: v1
+  description: >-
+    RESTful API for SynFutures tokenized stock (Real-World Asset) trading. Covers
+    market data, portfolio, order placement (calldata build + One Click delegated
+    send), cash and stock deposits/withdrawals, and One Click (1CT) delegation
+    management. All /api/v1 endpoints require HMAC-SHA256 request authentication
+    with an IP-whitelisted partner API key.
+  contact:
+    name: SynFutures
+    url: https://docs.synfutures.com/rwa-trading-apis/readme
+  x-logo:
+    url: https://www.synfutures.com/assets/trade_every_asset.png
+servers:
+  - url: https://base-api.synfutures.com/rwa/trading
+    description: RWA Trading API (base path /api/v1)
+tags:
+  - name: Market Data
+    description: On-chain market config, symbols, prices, and corporate actions
+  - name: Portfolio
+    description: User info, balances, and positions
+  - name: Orders
+    description: Order list, calldata build, One Click send/cancel, and tx recording
+  - name: Cash
+    description: Cash (USD) deposits and withdrawals
+  - name: Stock
+    description: Tokenized stock deposits and withdrawals
+  - name: One Click
+    description: One Click Trading (1CT) delegation lifecycle
+security:
+  - ApiKeyAuth: []
+    ApiTimestamp: []
+    ApiNonce: []
+    ApiSignature: []
+    ApiChainId: []
+    ApiProduct: []
+paths:
+  /api/v1/config:
+    get:
+      operationId: getMarketConfig
+      tags: [Market Data]
+      summary: On-chain market config
+      description: Returns the on-chain market configuration for the RWA trading venue.
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/symbols:
+    get:
+      operationId: listSymbols
+      tags: [Market Data]
+      summary: Tradable symbols
+      description: Lists tradable symbols and their tradability status.
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/prices/{symbol}:
+    get:
+      operationId: getPrice
+      tags: [Market Data]
+      summary: Real-time quote
+      parameters:
+        - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/prices/{symbol}/history:
+    get:
+      operationId: getPriceHistory
+      tags: [Market Data]
+      summary: K-line history
+      parameters:
+        - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/underlying/{symbol}/price:
+    get:
+      operationId: getUnderlyingPrice
+      tags: [Market Data]
+      summary: Underlying quote
+      parameters:
+        - $ref: '#/components/parameters/Symbol'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/corporate-action:
+    get:
+      operationId: listCorporateActions
+      tags: [Market Data]
+      summary: Corporate actions
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /api/v1/users/{userId}:
+    get:
+      operationId: getUser
+      tags: [Portfolio]
+      summary: User info
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/users/{userId}/balance:
+    get:
+      operationId: getUserBalance
+      tags: [Portfolio]
+      summary: Balances
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/users/{userId}/positions:
+    get:
+      operationId: getUserPositions
+      tags: [Portfolio]
+      summary: Positions
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders:
+    get:
+      operationId: listOrders
+      tags: [Orders]
+      summary: Order list
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { $ref: '#/components/responses/PagedEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/calldata:
+    post:
+      operationId: buildOrderCalldata
+      tags: [Orders]
+      summary: Build order calldata
+      description: Builds the on-chain calldata for an order for self-submission.
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/send:
+    post:
+      operationId: sendOrder
+      tags: [Orders]
+      summary: One Click order
+      description: Places an order via One Click delegated submission.
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/with-deposit/calldata:
+    post:
+      operationId: buildOrderWithDepositCalldata
+      tags: [Orders]
+      summary: Build order-with-deposit calldata
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/with-deposit/send:
+    post:
+      operationId: sendOrderWithDeposit
+      tags: [Orders]
+      summary: One Click order with deposit
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/tx:
+    post:
+      operationId: recordOrderTx
+      tags: [Orders]
+      summary: Record order tx
+      description: Records a self-submitted order transaction hash.
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/tx/{txHash}:
+    get:
+      operationId: getOrderByTx
+      tags: [Orders]
+      summary: Order by tx
+      parameters:
+        - name: txHash
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/{orderId}:
+    get:
+      operationId: getOrder
+      tags: [Orders]
+      summary: Order detail
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/{orderId}/calldata:
+    delete:
+      operationId: buildCancelOrderCalldata
+      tags: [Orders]
+      summary: Cancel calldata
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/orders/{orderId}/send:
+    delete:
+      operationId: sendCancelOrder
+      tags: [Orders]
+      summary: One Click cancel
+      parameters:
+        - $ref: '#/components/parameters/OrderId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/deposits/calldata:
+    post:
+      operationId: buildCashDepositCalldata
+      tags: [Cash]
+      summary: Deposit calldata
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/deposits/send:
+    post:
+      operationId: sendCashDeposit
+      tags: [Cash]
+      summary: One Click deposit
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/deposits/tx:
+    post:
+      operationId: recordCashDepositTx
+      tags: [Cash]
+      summary: Record deposit tx
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/deposits:
+    get:
+      operationId: listCashDeposits
+      tags: [Cash]
+      summary: Deposit list
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { $ref: '#/components/responses/PagedEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/deposits/{operationId}:
+    get:
+      operationId: getCashDeposit
+      tags: [Cash]
+      summary: Deposit detail
+      parameters:
+        - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/withdrawals/calldata:
+    post:
+      operationId: buildCashWithdrawalCalldata
+      tags: [Cash]
+      summary: Withdraw calldata
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/withdrawals/send:
+    post:
+      operationId: sendCashWithdrawal
+      tags: [Cash]
+      summary: One Click withdraw
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/withdrawals/tx:
+    post:
+      operationId: recordCashWithdrawalTx
+      tags: [Cash]
+      summary: Record withdraw tx
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/withdrawals:
+    get:
+      operationId: listCashWithdrawals
+      tags: [Cash]
+      summary: Withdraw list
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { $ref: '#/components/responses/PagedEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/cash/withdrawals/{operationId}:
+    get:
+      operationId: getCashWithdrawal
+      tags: [Cash]
+      summary: Withdraw detail
+      parameters:
+        - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/deposits/calldata:
+    post:
+      operationId: buildStockDepositCalldata
+      tags: [Stock]
+      summary: Stock deposit calldata
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/deposits/send:
+    post:
+      operationId: sendStockDeposit
+      tags: [Stock]
+      summary: One Click stock deposit
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/deposits/tx:
+    post:
+      operationId: recordStockDepositTx
+      tags: [Stock]
+      summary: Record stock deposit tx
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/deposits:
+    get:
+      operationId: listStockDeposits
+      tags: [Stock]
+      summary: Stock deposit list
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { $ref: '#/components/responses/PagedEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/deposits/{operationId}:
+    get:
+      operationId: getStockDeposit
+      tags: [Stock]
+      summary: Stock deposit detail
+      parameters:
+        - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/withdrawals/calldata:
+    post:
+      operationId: buildStockWithdrawalCalldata
+      tags: [Stock]
+      summary: Stock withdrawal calldata
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/withdrawals/send:
+    post:
+      operationId: sendStockWithdrawal
+      tags: [Stock]
+      summary: One Click stock withdrawal
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/withdrawals/tx:
+    post:
+      operationId: recordStockWithdrawalTx
+      tags: [Stock]
+      summary: Record stock withdrawal tx
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/withdrawals:
+    get:
+      operationId: listStockWithdrawals
+      tags: [Stock]
+      summary: Stock withdrawal list
+      parameters:
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200': { $ref: '#/components/responses/PagedEnvelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/stock/withdrawals/{operationId}:
+    get:
+      operationId: getStockWithdrawal
+      tags: [Stock]
+      summary: Stock withdrawal detail
+      parameters:
+        - $ref: '#/components/parameters/OperationId'
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/1ct/status:
+    get:
+      operationId: getDelegationStatus
+      tags: [One Click]
+      summary: Delegation status
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/1ct/prepare:
+    post:
+      operationId: prepareDelegation
+      tags: [One Click]
+      summary: EIP-712 payload
+      description: Returns the EIP-712 typed-data payload to sign to enable One Click delegation.
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/1ct/enable:
+    post:
+      operationId: enableDelegation
+      tags: [One Click]
+      summary: Enable delegation
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /api/v1/1ct/disable:
+    post:
+      operationId: disableDelegation
+      tags: [One Click]
+      summary: Disable delegation
+      requestBody: { $ref: '#/components/requestBodies/Generic' }
+      responses:
+        '200': { $ref: '#/components/responses/Envelope' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: Partner API key (must be active, unexpired, and IP-whitelisted).
+    ApiTimestamp:
+      type: apiKey
+      in: header
+      name: x-api-ts
+      description: Unix millisecond timestamp; must be within 45s drift tolerance.
+    ApiNonce:
+      type: apiKey
+      in: header
+      name: x-api-nonce
+      description: Unique replay-prevention nonce per key within the 45s window (UUID recommended).
+    ApiSignature:
+      type: apiKey
+      in: header
+      name: x-api-sign
+      description: HMAC-SHA256 signature over the canonical request, hex-encoded (case-insensitive).
+    ApiChainId:
+      type: apiKey
+      in: header
+      name: x-api-chain-id
+      description: Chain identifier (e.g. 8453 Base, 1 Ethereum, 143 Monad).
+    ApiProduct:
+      type: apiKey
+      in: header
+      name: x-api-p
+      description: Product type; use "Synfutures".
+  parameters:
+    Symbol:
+      name: symbol
+      in: path
+      required: true
+      schema: { type: string }
+      description: Tradable symbol.
+    UserId:
+      name: userId
+      in: path
+      required: true
+      schema: { type: string }
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      schema: { type: string }
+    OperationId:
+      name: operationId
+      in: path
+      required: true
+      schema: { type: string }
+    Page:
+      name: page
+      in: query
+      required: false
+      schema: { type: integer, default: 1, minimum: 1 }
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema: { type: integer, default: 10, minimum: 1, maximum: 100 }
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+  responses:
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Envelope' }
+    PagedEnvelope:
+      description: Paged response envelope
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/PagedEnvelope' }
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Envelope' }
+    RateLimited:
+      description: Rate limit exceeded (1,200 requests/min/IP)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Envelope' }
+  schemas:
+    Envelope:
+      type: object
+      description: All responses share this envelope.
+      properties:
+        code:
+          type: integer
+          description: 200 on success; error code otherwise.
+          example: 200
+        errMsg:
+          type: string
+          description: Empty on success; descriptive message on error.
+        data:
+          description: Response payload (shape varies per endpoint).
+        uuid:
+          type: string
+          nullable: true
+          description: Request/trace identifier (null when not applicable).
+        t:
+          type: integer
+          nullable: true
+          description: Server timestamp (null when not applicable).
+    PagedEnvelope:
+      allOf:
+        - $ref: '#/components/schemas/Envelope'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                total:
+                  type: integer
+                  description: Total matching records.
+                rows:
+                  type: array
+                  description: Current page of records.
+                  items:
+                    type: object

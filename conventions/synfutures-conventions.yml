@@ -1,0 +1,45 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/rwa-trading-apis/getting-started/conventions.md
+authentication:
+  style: HMAC-SHA256 signed requests with IP-whitelisted API key
+  ref: authentication/synfutures-authentication.yml
+pagination:
+  style: page-number
+  params:
+    - {name: page, default: 1, minimum: 1}
+    - {name: limit, default: 10, minimum: 1, maximum: 100}
+  response_fields:
+    - {name: total, description: Total matching records}
+    - {name: rows, description: Current page array}
+  notes: Values below minimum thresholds default to their minimum values.
+idempotency:
+  supported: false
+  note: >-
+    No documented idempotency key. x-api-nonce is a replay-prevention nonce
+    (unique per key within a 45s window), not an idempotency key for retry-safe
+    request de-duplication.
+error_envelope:
+  fields:
+    - {name: code, description: "200 on success; error code otherwise (401, 500, 10000-10003)"}
+    - {name: errMsg, description: Empty on success; descriptive message on error}
+    - {name: data, description: Response payload}
+    - {name: uuid, description: Request/trace identifier (null when not applicable)}
+    - {name: t, description: Server timestamp (null when not applicable)}
+  http_status: HTTP 400 is used for business errors, carrying a specific code in the envelope.
+  ref: errors/synfutures-problem-types.yml
+request_tracing:
+  field: uuid
+  note: Response envelope carries a uuid trace identifier.
+timestamps:
+  field: t
+  unit: server timestamp (ms)
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  ref: lifecycle/synfutures-lifecycle.yml
+rate_limit_signaling:
+  limit: 1200 requests/min/IP
+  over_limit_status: 429
+  ref: rate-limits/synfutures-rate-limits.yml

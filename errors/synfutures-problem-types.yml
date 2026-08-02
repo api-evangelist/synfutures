@@ -1,0 +1,44 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/rwa-trading-apis/getting-started/conventions.md
+format: envelope
+envelope:
+  fields: [code, errMsg, data, uuid, t]
+  description: >-
+    Errors are returned with HTTP 400 for business errors, carrying a numeric
+    `code` and human-readable `errMsg` in the standard response envelope.
+    Transport-level failures use standard HTTP status (401, 429, 500).
+problems:
+  - code: 401
+    http_status: 401
+    title: Unauthorized
+    detail: >-
+      Authentication failed - invalid/expired API key, bad HMAC signature,
+      timestamp drift beyond 45s, or a key with an empty/unset IP whitelist
+      (which rejects all requests).
+    remediation: Verify key validity, IP whitelist, timestamp within 45s, and signature computation.
+  - code: 429
+    http_status: 429
+    title: Too Many Requests
+    detail: Rate limit exceeded (1,200 requests/min/IP; may vary by endpoint and load).
+    remediation: Back off and retry; reduce request rate.
+  - code: 500
+    http_status: 500
+    title: Internal Server Error
+    detail: Server-side error.
+  - code: 10000
+    http_status: 400
+    title: Business error 10000
+    detail: Documented business error code (range 10000-10003).
+  - code: 10001
+    http_status: 400
+    title: Business error 10001
+    detail: Documented business error code (range 10000-10003).
+  - code: 10002
+    http_status: 400
+    title: Business error 10002
+    detail: Documented business error code (range 10000-10003).
+  - code: 10003
+    http_status: 400
+    title: Business error 10003
+    detail: Documented business error code (range 10000-10003).

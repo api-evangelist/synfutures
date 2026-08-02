@@ -1,0 +1,113 @@
+# SynFutures Docs
+
+## English
+
+- [Introduction](https://docs.synfutures.com/introduction.md)
+- [RWA Overview](https://docs.synfutures.com/rwa-trading/rwa-overview.md)
+- [RWA Partners](https://docs.synfutures.com/rwa-trading/rwa-partners.md)
+- [How RWA Trading Works?](https://docs.synfutures.com/rwa-trading/how-rwa-trading-works.md)
+- [Getting Started](https://docs.synfutures.com/rwa-trading/getting-started.md): Follow the simple steps below to get started:
+- [FAQ](https://docs.synfutures.com/rwa-trading/faq.md)
+- [Perp Overview](https://docs.synfutures.com/perp-trading/perp-overview.md)
+- [Pricing](https://docs.synfutures.com/perp-trading/pricing.md)
+- [Market Order](https://docs.synfutures.com/perp-trading/market-order.md)
+- [Limit Order](https://docs.synfutures.com/perp-trading/limit-order.md)
+- [Position and Margin](https://docs.synfutures.com/perp-trading/position-and-margin.md)
+- [Funding for Perpetual Futures](https://docs.synfutures.com/perp-trading/funding-for-perpetual-futures.md)
+- [Liquidations](https://docs.synfutures.com/perp-trading/liquidations.md)
+- [Liquidity (LP)](https://docs.synfutures.com/perp-trading/liquidity-lp.md)
+- [Protocol Parameters](https://docs.synfutures.com/perp-trading/protocol-parameters.md)
+- [Base Network](https://docs.synfutures.com/perp-trading/protocol-parameters/base-network.md)
+- [Pair Specifications](https://docs.synfutures.com/perp-trading/pair-specifications.md)
+- [Base Network](https://docs.synfutures.com/perp-trading/pair-specifications/base-network.md)
+- [Security](https://docs.synfutures.com/perp-trading/security.md)
+- [Smoothed Spot Index Price](https://docs.synfutures.com/perp-trading/security/smoothed-spot-index-price.md)
+- [Dynamic Penalty Fees](https://docs.synfutures.com/perp-trading/security/dynamic-penalty-fees.md)
+- [Bug Bounty](https://docs.synfutures.com/perp-trading/security/bug-bounty.md)
+- [Audit](https://docs.synfutures.com/perp-trading/security/audit.md)
+- [Perp Launchpad](https://docs.synfutures.com/perp-trading/perp-launchpad.md)
+- [Overview](https://docs.synfutures.com/perp-trading/perp-launchpad/overview.md)
+- [FAQ](https://docs.synfutures.com/perp-trading/perp-launchpad/faq.md)
+- [Legal Disclaimer](https://docs.synfutures.com/perp-trading/perp-launchpad/legal-disclaimer.md)
+- [VIP Fee Tier](https://docs.synfutures.com/perp-trading/vip-fee-tier.md)
+- [FAQ For Perp](https://docs.synfutures.com/perp-trading/faq-for-perp.md)
+- [Trade](https://docs.synfutures.com/perp-trading/faq-for-perp/trade.md)
+- [Liquidity (LP)](https://docs.synfutures.com/perp-trading/faq-for-perp/liquidity-lp.md)
+- [Overview](https://docs.synfutures.com/usdf-token/overview.md)
+- [$F Token Contract Addresses](https://docs.synfutures.com/usdf-token/usdf-token-contract-addresses.md)
+- [$F Tokenomics](https://docs.synfutures.com/usdf-token/usdf-tokenomics.md)
+- [$F Staking](https://docs.synfutures.com/usdf-token/usdf-staking.md)
+- [Aggregator](https://docs.synfutures.com/spot/aggregator.md)
+- [Supported Exchanges](https://docs.synfutures.com/spot/aggregator/supported-exchanges.md)
+- [Audit](https://docs.synfutures.com/spot/aggregator/audit.md)
+- [Video Tutorial](https://docs.synfutures.com/tutorials/video-tutorial.md)
+- [Written Tutorial](https://docs.synfutures.com/tutorials/written-tutorial.md)
+- [SDK](https://docs.synfutures.com/developer/sdk.md)
+- [API](https://docs.synfutures.com/developer/api.md)
+- [Smart Contract Addresses](https://docs.synfutures.com/developer/smart-contract-addresses.md)
+- [Base Network](https://docs.synfutures.com/developer/smart-contract-addresses/base-network.md)
+- [Blast Network](https://docs.synfutures.com/developer/smart-contract-addresses/blast-network.md)
+- [Monad Network](https://docs.synfutures.com/developer/smart-contract-addresses/monad-network.md)
+- [White Paper](https://docs.synfutures.com/protocol/white-paper.md)
+- [Audit Report](https://docs.synfutures.com/protocol/audit-report.md)
+- [Patent](https://docs.synfutures.com/protocol/patent.md)
+- [Legacy Links](https://docs.synfutures.com/protocol/legacy-links.md)
+- [Contacts](https://docs.synfutures.com/protocol/contacts.md)
+
+## RWA Trading APIs
+
+- [RWA API](https://docs.synfutures.com/rwa-trading-apis/readme.md)
+- [Introduction](https://docs.synfutures.com/rwa-trading-apis/getting-started/introduction.md)
+- [Conventions](https://docs.synfutures.com/rwa-trading-apis/getting-started/conventions.md)
+- [RWA Product Overview](https://docs.synfutures.com/rwa-trading-apis/getting-started/product-and-contracts.md)
+- [API Integration Playbook](https://docs.synfutures.com/rwa-trading-apis/getting-started/trader-questions.md)
+- [Headers & Permissions](https://docs.synfutures.com/rwa-trading-apis/authentication/headers-and-permissions.md)
+- [HMAC Authentication](https://docs.synfutures.com/rwa-trading-apis/authentication/signature.md)
+- [Examples](https://docs.synfutures.com/rwa-trading-apis/authentication/examples.md)
+- [Holdings & Positions](https://docs.synfutures.com/rwa-trading-apis/portfolio/overview.md)
+- [On-Chain Market Config](https://docs.synfutures.com/rwa-trading-apis/market-data/on-chain-config.md)
+- [Stock Oracle](https://docs.synfutures.com/rwa-trading-apis/market-data/stock-oracle.md)
+- [Symbols & Tradability](https://docs.synfutures.com/rwa-trading-apis/market-data/symbols-and-tradability.md)
+- [Quotes & History](https://docs.synfutures.com/rwa-trading-apis/market-data/quotes-and-history.md)
+- [Overview](https://docs.synfutures.com/rwa-trading-apis/trading/overview.md)
+- [Place & Cancel Orders](https://docs.synfutures.com/rwa-trading-apis/trading/place-and-cancel-orders.md)
+- [Order Status & History](https://docs.synfutures.com/rwa-trading-apis/trading/order-status-and-history.md)
+- [One Click Delegated](https://docs.synfutures.com/rwa-trading-apis/trading/one-click-delegated.md)
+- [One Click Security and API Semantics](https://docs.synfutures.com/rwa-trading-apis/trading/one-click-security-ux.md)
+- [Overview](https://docs.synfutures.com/rwa-trading-apis/cash-operations/cash.md)
+- [Deposits](https://docs.synfutures.com/rwa-trading-apis/cash-operations/deposits.md)
+- [Withdrawals](https://docs.synfutures.com/rwa-trading-apis/cash-operations/withdrawals.md)
+- [Operation Status](https://docs.synfutures.com/rwa-trading-apis/cash-operations/operation-status.md)
+- [Buffer Mechanism](https://docs.synfutures.com/rwa-trading-apis/cash-operations/buffer-mechanism.md)
+- [Overview](https://docs.synfutures.com/rwa-trading-apis/stock-operations/stock.md)
+- [Deposits & Withdrawals](https://docs.synfutures.com/rwa-trading-apis/stock-operations/deposits-and-withdrawals.md)
+- [Overview](https://docs.synfutures.com/rwa-trading-apis/guides/guides.md)
+- [Quickstart: First API Trade](https://docs.synfutures.com/rwa-trading-apis/guides/quickstart-first-trade.md)
+- [Self-Submit On-Chain](https://docs.synfutures.com/rwa-trading-apis/guides/self-submit-on-chain.md)
+- [One Click Flow](https://docs.synfutures.com/rwa-trading-apis/guides/one-click-flow.md)
+- [Demo Code](https://docs.synfutures.com/rwa-trading-apis/guides/demo-code.md)
+- [Overview](https://docs.synfutures.com/rwa-trading-apis/reference/reference.md)
+- [Endpoint Index](https://docs.synfutures.com/rwa-trading-apis/reference/endpoint-index.md)
+- [API ↔ Contract Map](https://docs.synfutures.com/rwa-trading-apis/reference/api-contract-map.md)
+- [Enums & Constraints](https://docs.synfutures.com/rwa-trading-apis/reference/enums.md)
+- [Environments & Chains](https://docs.synfutures.com/rwa-trading-apis/reference/environments-and-chains.md)
+- [Status Model](https://docs.synfutures.com/rwa-trading-apis/reference/status-model.md)
+- [Sample Responses](https://docs.synfutures.com/rwa-trading-apis/reference/sample-responses.md)
+- [Troubleshooting](https://docs.synfutures.com/rwa-trading-apis/reference/troubleshooting.md)
+- [Integration Test Checklist](https://docs.synfutures.com/rwa-trading-apis/reference/integration-test-checklist.md)
+
+
+---
+
+# Agent Instructions
+This documentation is published with GitBook. GitBook is the documentation platform designed so that both humans and AI agents can read, navigate, and reason over technical content effectively. Learn more at gitbook.com.
+
+## Querying This Documentation
+If you need additional information, you can query the documentation dynamically by asking a question.
+Perform an HTTP GET request on a page URL with the `ask` query parameter:
+```
+GET https://docs.synfutures.com/introduction.md?ask=<question>
+```
+The question should be specific, self-contained, and written in natural language.
+The response will contain a direct answer to the question and relevant excerpts and sources from the documentation.
+Use this mechanism when the answer is not explicitly present in the current page, you need clarification or additional context, or you want to retrieve related documentation sections.

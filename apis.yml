@@ -1,8 +1,19 @@
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
 aid: synfutures
 name: SynFutures
-description: 'SynFutures is a company surfaced as a portfolio company of pantera-capital, polychain and
-  added to the API Evangelist network as a stub for enrichment. Sector: crypto. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  SynFutures is an on-chain derivatives and real-world-asset (RWA) trading
+  protocol that brings crypto perpetuals, tokenized stocks, and ETFs on-chain
+  across Base, Ethereum, and Monad. For developers it exposes a RESTful RWA
+  Trading API (market data, portfolio, order placement, cash and stock
+  operations, and One Click delegated trading) secured with HMAC-SHA256 signed,
+  IP-whitelisted API keys, plus TypeScript SDKs (@synfutures/sdks-perp and
+  oyster-sdk) and on-chain smart contracts for the Oyster (V3) protocol.
+  Backed by Pantera Capital and Polychain.
 url: https://raw.githubusercontent.com/api-evangelist/synfutures/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,18 +22,151 @@ x-backed-by:
 - polychain
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://www.synfutures.com/assets/trade_every_asset.png
 tags:
 - Company
 - Crypto
-apis: []
+- DeFi
+- Trading
+- Derivatives
+- Real World Assets
+- Blockchain
+- API
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: synfutures:synfutures-cash-api
+  name: SynFutures Cash API
+  description: Cash (USD) deposits and withdrawals
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - Cash
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-cash-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
+- aid: synfutures:synfutures-market-data-api
+  name: SynFutures Market Data API
+  description: On-chain market config, symbols, prices, and corporate actions
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - Market Data
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-market-data-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
+- aid: synfutures:synfutures-one-click-api
+  name: SynFutures One Click API
+  description: One Click Trading (1CT) delegation lifecycle
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - One Click
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-one-click-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
+- aid: synfutures:synfutures-orders-api
+  name: SynFutures Orders API
+  description: Order list, calldata build, One Click send/cancel, and tx recording
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-orders-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
+- aid: synfutures:synfutures-portfolio-api
+  name: SynFutures Portfolio API
+  description: User info, balances, and positions
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - Portfolio
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-portfolio-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
+- aid: synfutures:synfutures-stock-api
+  name: SynFutures Stock API
+  description: Tokenized stock deposits and withdrawals
+  humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
+  baseURL: https://base-api.synfutures.com/rwa/trading
+  tags:
+  - Stock
+  properties:
+  - type: OpenAPI
+    url: openapi/synfutures-stock-api-openapi.yml
+  - type: Authentication
+    url: authentication/synfutures-authentication.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/synfutures-agentic-access.yml
+- type: DomainSecurity
+  url: security/synfutures-domain-security.yml
 - type: Website
   url: https://www.synfutures.com/
+- type: DeveloperPortal
+  url: https://docs.synfutures.com/
+- type: Documentation
+  url: https://docs.synfutures.com/rwa-trading-apis/readme
+- type: APIReference
+  url: https://docs.synfutures.com/rwa-trading-apis/reference/endpoint-index
+- type: GettingStarted
+  url: https://docs.synfutures.com/rwa-trading-apis/guides/quickstart-first-trade
+- type: GitHubOrganization
+  url: https://github.com/SynFutures
+- type: SignUp
+  url: https://app.synfutures.com
+- type: OpenAPI
+  url: openapi/synfutures-rwa-trading-openapi.yml
+- type: Authentication
+  url: authentication/synfutures-authentication.yml
+- type: LLMsTxt
+  url: llms/synfutures-llms.txt
+- type: Packages
+  url: packages/synfutures-packages.yml
+- type: SDKs
+  url: packages/synfutures-packages.yml
+- type: Conventions
+  url: conventions/synfutures-conventions.yml
+- type: ErrorCatalog
+  url: errors/synfutures-problem-types.yml
+- type: RateLimits
+  url: rate-limits/synfutures-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/synfutures-lifecycle.yml
+- type: MCPServer
+  url: mcp/synfutures-mcp.yml
+- type: Conformance
+  url: conformance/synfutures-conformance.yml
+- type: DataModel
+  url: data-model/synfutures-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml

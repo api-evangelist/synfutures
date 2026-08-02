@@ -1,0 +1,24 @@
+{
+  "provider": "synfutures",
+  "sources": [
+    "synfutures-cash-api-openapi.yml",
+    "synfutures-market-data-api-openapi.yml",
+    "synfutures-one-click-api-openapi.yml",
+    "synfutures-orders-api-openapi.yml",
+    "synfutures-portfolio-api-openapi.yml",
+    "synfutures-stock-api-openapi.yml"
+  ],
+  "outputs": [
+    "synfutures-cash-api-openapi.yml",
+    "synfutures-market-data-api-openapi.yml",
+    "synfutures-one-click-api-openapi.yml",
+    "synfutures-orders-api-openapi.yml",
+    "synfutures-portfolio-api-openapi.yml",
+    "synfutures-stock-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

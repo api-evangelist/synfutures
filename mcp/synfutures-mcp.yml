@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/synfutures-rwa-trading-openapi.yml
+note: >-
+  No official hosted MCP server found for SynFutures. This is a candidate tool
+  list derived from the documented RWA Trading API operations. Read-only market
+  and portfolio tools are the safest starting surface; trading, cash, stock and
+  delegation operations move funds on-chain and should require human-in-the-loop.
+server:
+  name: synfutures-rwa-trading
+  transport: http
+tools:
+  - name: get_market_config
+    description: Get on-chain market config
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getMarketConfig
+  - name: list_symbols
+    description: List tradable symbols
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#listSymbols
+  - name: get_price
+    description: Get real-time quote for a symbol
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getPrice
+  - name: get_price_history
+    description: Get K-line history for a symbol
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getPriceHistory
+  - name: get_underlying_price
+    description: Get underlying quote for a symbol
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getUnderlyingPrice
+  - name: list_corporate_actions
+    description: List corporate actions
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#listCorporateActions
+  - name: get_user
+    description: Get user info
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getUser
+  - name: get_user_balance
+    description: Get user balances
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getUserBalance
+  - name: get_user_positions
+    description: Get user positions
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getUserPositions
+  - name: list_orders
+    description: List orders
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#listOrders
+  - name: get_order
+    description: Get order detail
+    source_operation: openapi/synfutures-rwa-trading-openapi.yml#getOrder

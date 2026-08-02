@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/synfutures-rwa-trading-openapi.yml
+entities:
+  - name: Symbol
+    key: symbol
+    description: Tradable RWA (tokenized stock) instrument.
+  - name: User
+    key: userId
+    description: Trading account addressed by userId (wallet address).
+  - name: Order
+    key: orderId
+    description: An order; may be built as calldata for self-submit or sent via One Click.
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+      - {type: belongs_to, target: Symbol, via: symbol}
+  - name: CashOperation
+    key: operationId
+    description: A cash (USD) deposit or withdrawal operation.
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+  - name: StockOperation
+    key: operationId
+    description: A tokenized-stock deposit or withdrawal operation.
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+      - {type: belongs_to, target: Symbol, via: symbol}
+  - name: Position
+    description: A user's open position in a symbol.
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+      - {type: belongs_to, target: Symbol, via: symbol}
+  - name: Delegation
+    description: One Click (1CT) EIP-712 delegation authorizing gasless trading.
+    relationships:
+      - {type: belongs_to, target: User, via: userId}
+identifiers:
+  chain_ref: On-chain operations return a transaction hash (txHash) recorded via /orders/tx and /*/tx endpoints.

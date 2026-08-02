@@ -1,0 +1,29 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/synfutures-rwa-trading-openapi.yml
+standards:
+  - id: rest
+    conforms: true
+    evidence: RESTful JSON API over HTTPS with resource-oriented /api/v1 paths.
+  - id: hmac-request-signing
+    conforms: true
+    evidence: HMAC-SHA256 signed requests (x-api-sign) with timestamp + nonce replay protection.
+  - id: eip-712
+    conforms: true
+    evidence: One Click (1CT) delegation uses EIP-712 typed-data signatures.
+  - id: oauth2
+    conforms: false
+    evidence: Uses API-key + HMAC signing, not OAuth 2.0.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a custom {code,errMsg,data,uuid,t} envelope, not application/problem+json.
+  - id: json-api
+    conforms: false
+  - id: pagination
+    conforms: true
+    evidence: page/limit query params with total/rows response fields.
+  - id: idempotency
+    conforms: false
+    evidence: No documented idempotency key; nonce is for replay prevention only.

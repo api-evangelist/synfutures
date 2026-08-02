@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/developer/sdk
+packages:
+  - language: javascript
+    registry: npm
+    name: "@synfutures/sdks-perp"
+    url: https://www.npmjs.com/package/@synfutures/sdks-perp
+    install: npm install @synfutures/sdks-perp
+    version: 1.0.2
+    official: true
+    description: SynFutures V3 Perp SDK (TypeScript) for the perpetuals protocol.
+    repo: https://github.com/SynFutures/sdks
+  - language: javascript
+    registry: npm
+    name: "@synfutures/oyster-sdk"
+    url: https://www.npmjs.com/package/@synfutures/oyster-sdk
+    install: npm install @synfutures/oyster-sdk
+    version: 0.2.29
+    official: true
+    description: SynFutures Oyster (V3) TypeScript SDK.
+    repo: https://github.com/SynFutures/oyster-sdk

@@ -1,0 +1,10 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/developer/api
+rate_limits:
+  - scope: per-ip
+    limit_count: 1200
+    window: 1m
+    unit: requests
+    over_limit_status: 429
+    notes: The limit may fluctuate based on endpoint and system load.

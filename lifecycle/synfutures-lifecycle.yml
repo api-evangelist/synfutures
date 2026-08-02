@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.synfutures.com/developer/api
+versioning:
+  scheme: uri-path
+  current: v1
+  base_path: /api/v1
+  docs: https://docs.synfutures.com/rwa-trading-apis/reference/endpoint-index
+maturity:
+  stage: beta
+  note: The API is currently in beta and not publicly available; an API key must be requested from the SynFutures team.
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+status_page: null
+deprecated_operations: []
