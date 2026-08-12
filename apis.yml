@@ -145,7 +145,7 @@ common:
 - type: SignUp
   url: https://app.synfutures.com
 - type: OpenAPI
-  url: openapi/synfutures-rwa-trading-openapi.yml
+  url: openapi/_original/synfutures-rwa-trading-openapi.yml
 - type: Authentication
   url: authentication/synfutures-authentication.yml
 - type: LLMsTxt
