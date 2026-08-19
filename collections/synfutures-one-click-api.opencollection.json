@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SynFutures RWA Trading Cash One Click API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "One Click",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delegation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/1ct/status"
+          },
+          "docs": "Delegation status"
+        },
+        {
+          "info": {
+            "name": "EIP-712 payload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/1ct/prepare",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the EIP-712 typed-data payload to sign to enable One Click delegation."
+        },
+        {
+          "info": {
+            "name": "Enable delegation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/1ct/enable",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable delegation"
+        },
+        {
+          "info": {
+            "name": "Disable delegation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/1ct/disable",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disable delegation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

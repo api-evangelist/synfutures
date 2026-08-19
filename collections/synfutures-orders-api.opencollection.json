@@ -1,0 +1,196 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SynFutures RWA Trading Cash Orders API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Order list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Order list"
+        },
+        {
+          "info": {
+            "name": "Build order calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Builds the on-chain calldata for an order for self-submission."
+        },
+        {
+          "info": {
+            "name": "One Click order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Places an order via One Click delegated submission."
+        },
+        {
+          "info": {
+            "name": "Build order-with-deposit calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/with-deposit/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Build order-with-deposit calldata"
+        },
+        {
+          "info": {
+            "name": "One Click order with deposit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/with-deposit/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "One Click order with deposit"
+        },
+        {
+          "info": {
+            "name": "Record order tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/tx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records a self-submitted order transaction hash."
+        },
+        {
+          "info": {
+            "name": "Order by tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/tx/:txHash",
+            "params": [
+              {
+                "name": "txHash",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Order by tx"
+        },
+        {
+          "info": {
+            "name": "Order detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Order detail"
+        },
+        {
+          "info": {
+            "name": "Cancel calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/:orderId/calldata",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel calldata"
+        },
+        {
+          "info": {
+            "name": "One Click cancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/orders/:orderId/send",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "One Click cancel"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

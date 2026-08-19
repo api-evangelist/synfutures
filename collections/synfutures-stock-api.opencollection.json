@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SynFutures RWA Trading Cash Stock API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stock",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stock deposit calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/deposits/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stock deposit calldata"
+        },
+        {
+          "info": {
+            "name": "One Click stock deposit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/deposits/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "One Click stock deposit"
+        },
+        {
+          "info": {
+            "name": "Record stock deposit tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/deposits/tx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record stock deposit tx"
+        },
+        {
+          "info": {
+            "name": "Stock deposit list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/deposits",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Stock deposit list"
+        },
+        {
+          "info": {
+            "name": "Stock deposit detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/deposits/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stock deposit detail"
+        },
+        {
+          "info": {
+            "name": "Stock withdrawal calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/withdrawals/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stock withdrawal calldata"
+        },
+        {
+          "info": {
+            "name": "One Click stock withdrawal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/withdrawals/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "One Click stock withdrawal"
+        },
+        {
+          "info": {
+            "name": "Record stock withdrawal tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/withdrawals/tx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record stock withdrawal tx"
+        },
+        {
+          "info": {
+            "name": "Stock withdrawal list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/withdrawals",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Stock withdrawal list"
+        },
+        {
+          "info": {
+            "name": "Stock withdrawal detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/stock/withdrawals/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Stock withdrawal detail"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

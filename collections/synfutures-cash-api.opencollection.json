@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SynFutures RWA Trading Cash API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cash",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deposit calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/deposits/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deposit calldata"
+        },
+        {
+          "info": {
+            "name": "One Click deposit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/deposits/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "One Click deposit"
+        },
+        {
+          "info": {
+            "name": "Record deposit tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/deposits/tx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record deposit tx"
+        },
+        {
+          "info": {
+            "name": "Deposit list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/deposits",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Deposit list"
+        },
+        {
+          "info": {
+            "name": "Deposit detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/deposits/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deposit detail"
+        },
+        {
+          "info": {
+            "name": "Withdraw calldata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/withdrawals/calldata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Withdraw calldata"
+        },
+        {
+          "info": {
+            "name": "One Click withdraw",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/withdrawals/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "One Click withdraw"
+        },
+        {
+          "info": {
+            "name": "Record withdraw tx",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/withdrawals/tx",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record withdraw tx"
+        },
+        {
+          "info": {
+            "name": "Withdraw list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/withdrawals",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Withdraw list"
+        },
+        {
+          "info": {
+            "name": "Withdraw detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://base-api.synfutures.com/rwa/trading/api/v1/cash/withdrawals/:operationId",
+            "params": [
+              {
+                "name": "operationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Withdraw detail"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
