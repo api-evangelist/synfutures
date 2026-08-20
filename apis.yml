@@ -46,6 +46,14 @@ tags:
 - Derivatives
 - Real World Assets
 - Blockchain
+tags_raw:
+- Company
+- Crypto
+- DeFi
+- Trading
+- Derivatives
+- Real World Assets
+- Blockchain
 - API
 maintainers:
 - FN: Kin Lane
@@ -83,6 +91,8 @@ apis:
   humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
   baseURL: https://base-api.synfutures.com/rwa/trading
   tags:
+  - One-Click
+  tags_raw:
   - One Click
   properties:
   - type: OpenAPI
@@ -95,6 +105,8 @@ apis:
   humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
   baseURL: https://base-api.synfutures.com/rwa/trading
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
