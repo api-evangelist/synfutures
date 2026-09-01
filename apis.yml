@@ -103,7 +103,7 @@ apis:
   humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
   baseURL: https://base-api.synfutures.com/rwa/trading
   tags:
-  - One Click
+  - One-Click
   tags_raw:
   - One Click
   properties:
