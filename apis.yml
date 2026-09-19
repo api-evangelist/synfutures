@@ -145,6 +145,8 @@ apis:
   humanURL: https://docs.synfutures.com/rwa-trading-apis/readme
   baseURL: https://base-api.synfutures.com/rwa/trading
   tags:
+  - Stocks
+  tags_raw:
   - Stock
   properties:
   - type: OpenAPI
