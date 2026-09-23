@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: SynFutures RWA Trading Cash Orders API
+  title: SynFutures RWA Trading Orders API
   version: v1
   description: RESTful API for SynFutures tokenized stock (Real-World Asset) trading. Covers market data, portfolio, order placement (calldata build + One Click delegated send), cash and stock deposits/withdrawals, and One Click (1CT) delegation management. All /api/v1 endpoints require HMAC-SHA256 request authentication with an IP-whitelisted partner API key.
   contact:
@@ -161,28 +161,57 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+  responses:
+    PagedEnvelope:
+      description: Paged response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PagedEnvelope'
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
     Envelope:
-      type: object
-      description: All responses share this envelope.
-      properties:
-        code:
-          type: integer
-          description: 200 on success; error code otherwise.
-          example: 200
-        errMsg:
-          type: string
-          description: Empty on success; descriptive message on error.
-        data:
-          description: Response payload (shape varies per endpoint).
-        uuid:
-          type: string
-          nullable: true
-          description: Request/trace identifier (null when not applicable).
-        t:
-          type: integer
-          nullable: true
-          description: Server timestamp (null when not applicable).
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+  schemas:
     PagedEnvelope:
       allOf:
       - $ref: '#/components/schemas/Envelope'
@@ -199,56 +228,29 @@ components:
                 description: Current page of records.
                 items:
                   type: object
-  responses:
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    PagedEnvelope:
-      description: Paged response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PagedEnvelope'
     Envelope:
-      description: Standard response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-  parameters:
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    OrderId:
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
+      type: object
+      description: All responses share this envelope.
+      properties:
+        code:
+          type: integer
+          description: 200 on success; error code otherwise.
+          example: 200
+        errMsg:
+          type: string
+          description: Empty on success; descriptive message on error.
+        data:
+          description: Response payload (shape varies per endpoint).
+        uuid:
+          type:
+          - string
+          - 'null'
+          description: Request/trace identifier (null when not applicable).
+        t:
+          type:
+          - integer
+          - 'null'
+          description: Server timestamp (null when not applicable).
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

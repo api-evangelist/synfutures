@@ -1,12 +1,7 @@
 {
   "provider": "synfutures",
   "sources": [
-    "synfutures-cash-api-openapi.yml",
-    "synfutures-market-data-api-openapi.yml",
-    "synfutures-one-click-api-openapi.yml",
-    "synfutures-orders-api-openapi.yml",
-    "synfutures-portfolio-api-openapi.yml",
-    "synfutures-stock-api-openapi.yml"
+    "_original/synfutures-rwa-trading-openapi.yml"
   ],
   "outputs": [
     "synfutures-cash-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "synfutures-rwa-trading-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "synfutures-cash-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synfutures-market-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synfutures-one-click-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synfutures-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synfutures-portfolio-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synfutures-stock-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: SynFutures RWA Trading Cash One Click API
+  title: SynFutures RWA Trading One Click API
   version: v1
   description: RESTful API for SynFutures tokenized stock (Real-World Asset) trading. Covers market data, portfolio, order placement (calldata build + One Click delegated send), cash and stock deposits/withdrawals, and One Click (1CT) delegation management. All /api/v1 endpoints require HMAC-SHA256 request authentication with an IP-whitelisted partner API key.
   contact:
@@ -74,6 +74,26 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
   schemas:
     Envelope:
       type: object
@@ -89,33 +109,15 @@ components:
         data:
           description: Response payload (shape varies per endpoint).
         uuid:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Request/trace identifier (null when not applicable).
         t:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Server timestamp (null when not applicable).
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-  responses:
-    Envelope:
-      description: Standard response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
