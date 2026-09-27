@@ -155,37 +155,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 100
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        default: 1
-        minimum: 1
-    OperationId:
-      name: operationId
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
     PagedEnvelope:
       allOf:
@@ -227,12 +196,6 @@ components:
           - 'null'
           description: Server timestamp (null when not applicable).
   responses:
-    PagedEnvelope:
-      description: Paged response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PagedEnvelope'
     Unauthorized:
       description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
       content:
@@ -245,6 +208,43 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Envelope'
+    PagedEnvelope:
+      description: Paged response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PagedEnvelope'
+  parameters:
+    OperationId:
+      name: operationId
+      in: path
+      required: true
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 100
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

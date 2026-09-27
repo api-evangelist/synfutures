@@ -63,14 +63,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+    Envelope:
+      description: Standard response envelope
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Envelope'
-    Envelope:
-      description: Standard response envelope
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
       content:
         application/json:
           schema:

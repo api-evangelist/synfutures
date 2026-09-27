@@ -75,25 +75,18 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   responses:
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
     Envelope:
       description: Standard response envelope
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Envelope'
-  requestBodies:
-    Generic:
-      required: true
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
       content:
         application/json:
           schema:
-            type: object
+            $ref: '#/components/schemas/Envelope'
   schemas:
     Envelope:
       type: object
@@ -118,6 +111,13 @@ components:
           - integer
           - 'null'
           description: Server timestamp (null when not applicable).
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
