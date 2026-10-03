@@ -109,6 +109,14 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  parameters:
+    Symbol:
+      name: symbol
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Tradable symbol.
   schemas:
     Envelope:
       type: object
@@ -152,14 +160,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Envelope'
-  parameters:
-    Symbol:
-      name: symbol
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Tradable symbol.
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
