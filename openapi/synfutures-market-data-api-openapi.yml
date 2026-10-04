@@ -109,6 +109,25 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    RateLimited:
+      description: Rate limit exceeded (1,200 requests/min/IP)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
   parameters:
     Symbol:
       name: symbol
@@ -141,25 +160,6 @@ components:
           - integer
           - 'null'
           description: Server timestamp (null when not applicable).
-  responses:
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    RateLimited:
-      description: Rate limit exceeded (1,200 requests/min/IP)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    Envelope:
-      description: Standard response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

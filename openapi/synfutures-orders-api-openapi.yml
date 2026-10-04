@@ -161,6 +161,32 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  requestBodies:
+    Generic:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+  responses:
+    PagedEnvelope:
+      description: Paged response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PagedEnvelope'
+    Envelope:
+      description: Standard response envelope
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
+    Unauthorized:
+      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Envelope'
   parameters:
     Page:
       name: page
@@ -170,6 +196,12 @@ components:
         type: integer
         default: 1
         minimum: 1
+    OrderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
     Limit:
       name: limit
       in: query
@@ -179,12 +211,6 @@ components:
         default: 10
         minimum: 1
         maximum: 100
-    OrderId:
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
   schemas:
     Envelope:
       type: object
@@ -225,32 +251,6 @@ components:
                 description: Current page of records.
                 items:
                   type: object
-  responses:
-    Unauthorized:
-      description: Authentication failed (invalid key, signature, drift, or empty IP whitelist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-    PagedEnvelope:
-      description: Paged response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PagedEnvelope'
-    Envelope:
-      description: Standard response envelope
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Envelope'
-  requestBodies:
-    Generic:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
