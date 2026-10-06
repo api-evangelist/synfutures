@@ -50,7 +50,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-10-06'
 image: https://www.synfutures.com/assets/trade_every_asset.png
 tags:
 - Company
@@ -154,6 +154,8 @@ apis:
   - type: Authentication
     url: authentication/synfutures-authentication.yml
 common:
+- url: https://blog.synfutures.com/rss/
+  type: BlogRSS
 - type: AgenticAccess
   url: agentic-access/synfutures-agentic-access.yml
 - type: DomainSecurity
